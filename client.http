@@ -1,2 +1,42 @@
 ### Index method
 GET http://localhost:3000/api/jokes
+
+### Successfully posts a joke
+POST http://localhost:3000/api/jokes
+Content-Type: application/json
+
+{
+  "category_id": 1,
+  "body": "The furniture store keeps calling me to come back, but all I wanted was one night stand."
+}
+
+### Unsuccessfully posts a joke
+POST http://localhost:3000/api/jokes
+Content-Type: application/json
+
+{
+  "body": "The furniture store keeps calling me to come back, but all I wanted was one night stand."
+}
+
+### Show first joke
+GET http://localhost:3000/api/jokes/1
+
+
+### Could not show 1000th joke
+GET http://localhost:3000/api/jokes/1000
+
+
+### Successfully update a joke
+PUT http://localhost:3000/api/jokes/1
+Content-Type: application/json
+
+{
+  "category_id": 2,
+  "body": "Sample programming joke."
+}
+
+### Delete first joke
+DELETE http://localhost:3000/api/jokes/1
+
+### Unsuccessfully Delete 1000th joke
+DELETE http://localhost:3000/api/jokes/1000
