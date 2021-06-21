@@ -44,3 +44,34 @@ DELETE http://localhost:3000/api/jokes/1000
 
 ### Get random joke
 GET http://localhost:3000/api/jokes/random?
+
+
+### Add user
+POST http://localhost:3000/api/auth/sign_up
+Content-Type: application/json
+
+{
+  "username": "John",
+  "email": "john@test.com",
+  "password": "password4",
+  "password_confirmation": "password4"
+}
+
+
+### Check sign-in user
+POST http://localhost:3000/api/auth/sign_in
+Content-Type: application/json
+
+{
+  "email": "john@test.com",
+  "password": "password4"
+}
+
+### Error for non-existing user or wrong password
+POST http://localhost:3000/api/auth/sign_in
+Content-Type: application/json
+
+{
+  "email": "jared@test.com",
+  "password": "password5"
+}
