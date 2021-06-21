@@ -33,7 +33,33 @@ class JokesController < ApplicationController
     render json: 204
   end
   
+  def random
+    # Checks if there are categories listed in params
+    if params[:category]
+      puts "Searching for #{params[:category]}"
+      count = Joke.find_by_category(params[:category]).count
+
+      # This will run if there are no jokes under the category and ends
+      if count == 0
+        return render json: {error: "No jokes of that category"}, status: 404
+      end
+
+      # Pulls the random joke from the category
+      @joke = Joke.find_by_category(params[:category]).offset(rand(count)).first
+    
+    # Below will run when category params is not called
+    else
+      # Get a random joke from the mix
+      offset = rand(Joke.count)
+      @joke = Joke.offset(offset).first
+    end
+
+    # Renders and returns the joke
+    render json: @joke, status: 200
+  end
   
+
+
   private
   def joke_params
     params.require(:joke).permit(:category_id, :body)
