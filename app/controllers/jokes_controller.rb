@@ -1,5 +1,9 @@
 class JokesController < ApplicationController
+  # Since Knock gem is installed in this API, then we are able to use the "authenticate_user" action
+  before_action :authenticate_user, except: [:index, :random, :show]
   before_action :set_joke, only: [:show, :update, :destroy]
+  # Note: check_owner needs to be after the set_joke since there needs to be a joke there for accessing
+  before_action :check_owner, only: [:update, :destroy]
 
   def index
     @jokes = Joke.all
@@ -7,7 +11,7 @@ class JokesController < ApplicationController
   end
   
   def create
-    @joke = Joke.create(joke_params)
+    @joke = current_user.jokes.create(joke_params)
     if @joke.errors.any?
       render json: @joke.errors, status: :unprocessable_entity # fails to meet validation
     else
@@ -16,7 +20,7 @@ class JokesController < ApplicationController
   end
 
   def show
-    render json: @joke
+    render json: @joke.transform_joke
   end
 
   def update
@@ -70,6 +74,13 @@ class JokesController < ApplicationController
       @joke = Joke.find(params[:id])
     rescue => exception
       render json: {error: "Joke Not found"}, status: 404 
+    end
+  end
+
+  # Checks whether or not the user is the actual owner of the joke
+  def check_owner
+    if current_user.id != @joke.user.id
+      render json: {error: "You are not permitted"}, status: 401
     end
   end
   

@@ -4,6 +4,7 @@ GET http://localhost:3000/api/jokes
 ### Successfully posts a joke
 POST http://localhost:3000/api/jokes
 Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjQ0MDY0MjMsInN1YiI6NH0.mpvhdu7pBpjgAuW8MVEAkCpBrYJr4i1f1LnK9654NBk
 
 {
   "category_id": 1,
@@ -35,8 +36,15 @@ Content-Type: application/json
   "body": "Sample programming joke."
 }
 
-### Delete first joke
+### Successfully delete first joke
 DELETE http://localhost:3000/api/jokes/1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjQ0MDc2MjEsInN1YiI6MX0.Z8Y-4gxDq788sX2GhG0Ql0Va7hDfa5UszExxFHJV63g
+
+
+### Unsuccessfully delete first joke due to incorrect user
+DELETE http://localhost:3000/api/jokes/1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjQ0MDY0MjMsInN1YiI6NH0.mpvhdu7pBpjgAuW8MVEAkCpBrYJr4i1f1LnK9654NBk
+
 
 ### Unsuccessfully Delete 1000th joke
 DELETE http://localhost:3000/api/jokes/1000
@@ -63,8 +71,8 @@ POST http://localhost:3000/api/auth/sign_in
 Content-Type: application/json
 
 {
-  "email": "john@test.com",
-  "password": "password4"
+  "email": "ray@test.com",
+  "password": "password1"
 }
 
 ### Error for non-existing user or wrong password
